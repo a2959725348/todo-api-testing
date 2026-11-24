@@ -1,0 +1,64 @@
+name: 自动化测试
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+  workflow_dispatch:
+
+jobs:
+  api-test:
+    name: 接口自动化测试
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 安装 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: 安装依赖
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: 执行接口测试
+        run: pytest --alluredir=reports/allure-results
+
+      - name: 上传测试结果
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path: reports/allure-results
+          retention-days: 7
+
+  ui-test:
+    name: UI 自动化测试
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 安装 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: 安装依赖
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # GitHub 的 ubuntu-latest 自带 Chrome，Selenium Manager 会自动匹配驱动
+      - name: 执行 UI 测试
+        run: pytest -c ui.ini --alluredir=reports/allure-ui
+
+      - name: 上传测试结果
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-ui-results
+          path: reports/allure-ui
+          retention-days: 7
