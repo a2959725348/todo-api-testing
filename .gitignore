@@ -17,3 +17,7 @@ allure-report/
 .idea/
 .vscode/
 .DS_Store
+
+# Selenium Manager 本地缓存
+chromedriver/
+se-metadata.json
