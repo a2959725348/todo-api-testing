@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>待办清单 · 练习用演示系统</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <h1>待办清单</h1>
+    <div class="user-area">
+      <span id="current-user" class="username">未登录</span>
+      <button id="logout-btn" class="btn btn-ghost" type="button">退出登录</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- 登录 / 注册 -->
+    <section id="auth-panel" class="card">
+      <div class="tabs">
+        <button id="tab-login" class="tab active" type="button">登录</button>
+        <button id="tab-register" class="tab" type="button">注册</button>
+      </div>
+
+      <form id="auth-form" class="form" novalidate>
+        <label for="username">用户名</label>
+        <input id="username" name="username" type="text" placeholder="3-20 个字符" autocomplete="off" />
+
+        <label for="password">密码</label>
+        <input id="password" name="password" type="password" placeholder="6-20 个字符" autocomplete="off" />
+
+        <button id="auth-submit" class="btn btn-primary" type="submit">登录</button>
+        <p id="auth-message" class="message" role="alert"></p>
+      </form>
+    </section>
+
+    <!-- 待办列表 -->
+    <section id="todo-panel" class="card hidden">
+      <form id="todo-form" class="todo-form" novalidate>
+        <input id="todo-input" type="text" placeholder="今天要做点什么？" maxlength="60" />
+        <button id="todo-add" class="btn btn-primary" type="submit">添加</button>
+      </form>
+      <p id="todo-message" class="message" role="alert"></p>
+
+      <div class="toolbar">
+        <span id="todo-count" class="count">共 0 条</span>
+        <button id="clear-done" class="btn btn-ghost" type="button">清除已完成</button>
+      </div>
+
+      <ul id="todo-list" class="todo-list"></ul>
+      <p id="empty-hint" class="empty">还没有待办，先添加一条吧。</p>
+    </section>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
