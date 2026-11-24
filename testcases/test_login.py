@@ -54,7 +54,7 @@ class TestLogin:
             assert case["expect_field"] in r.data
 
     @pytest.mark.regression
-    def test_login_token_is_different_each_time(self, api, user):
+    def test_login_token_is_stable(self, api, user):
         """Token 由 user_id + 时间无关的签名生成，同一账号应稳定一致。"""
         payload = {"username": user["username"], "password": user["password"]}
         first = api.post("/api/login", json=payload).data["token"]
