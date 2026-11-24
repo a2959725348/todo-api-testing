@@ -1,0 +1,60 @@
+# 注册接口用例数据
+# 每条数据自带 id，pytest 会把它拼进用例名，失败时一眼能定位是哪组数据
+cases:
+  - id: 正常注册
+    username: user_normal_01
+    password: "123456"
+    expect_status: 201
+    expect_field: id
+
+  - id: 用户名最短边界_3位
+    username: abc
+    password: "123456"
+    expect_status: 201
+    expect_field: id
+
+  - id: 用户名最长边界_20位
+    username: user_1234567890_abcd
+    password: "123456"
+    expect_status: 201
+    expect_field: id
+
+  - id: 用户名超长_21位
+    username: user_1234567890_abcde
+    password: "123456"
+    expect_status: 400
+    expect_msg: 用户名长度需为 3-20 个字符
+
+  - id: 用户名过短_2位
+    username: ab
+    password: "123456"
+    expect_status: 400
+    expect_msg: 用户名长度需为 3-20 个字符
+
+  - id: 密码最短边界_6位
+    username: user_pwd_6
+    password: "123456"
+    expect_status: 201
+    expect_field: id
+
+  - id: 密码过短_5位
+    username: user_pwd_5
+    password: "12345"
+    expect_status: 400
+    expect_msg: 密码长度需为 6-20 个字符
+
+  - id: 密码超长_21位
+    username: user_pwd_21
+    password: "123456789012345678901"
+    expect_status: 400
+    expect_msg: 密码长度需为 6-20 个字符
+
+  - id: 缺少密码字段
+    username: user_no_pwd
+    expect_status: 400
+    expect_msg: 缺少必填字段
+
+  - id: 缺少用户名字段
+    password: "123456"
+    expect_status: 400
+    expect_msg: 缺少必填字段

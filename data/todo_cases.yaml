@@ -1,0 +1,37 @@
+# 待办新增/修改接口的入参校验数据
+cases:
+  - id: 标题最短边界_1位
+    title: 买
+    expect_status: 201
+
+  - id: 标题最长边界_50位
+    title: 这是一个需要检查长度边界的待办标题用来验证接口的入参校验逻辑是否正确这是一个需要检查长度边界的待办标
+    expect_status: 201
+
+  - id: 标题超长_51位
+    title: 这是一个需要检查长度边界的待办标题用来验证接口的入参校验逻辑是否正确这是一个需要检查长度边界的待办标题
+    expect_status: 400
+    expect_msg: 标题长度需为 1-50 个字符
+
+  - id: 标题为空串
+    title: ""
+    expect_status: 400
+    expect_msg: 标题长度需为 1-50 个字符
+
+  - id: 标题为 null
+    title: null
+    expect_status: 400
+    expect_msg: 缺少必填字段
+
+  - id: 标题为数字类型
+    title: 12345
+    expect_status: 400
+    expect_msg: 标题长度需为 1-50 个字符
+
+  - id: 标题含特殊字符
+    title: "<script>alert(1)</script>"
+    expect_status: 201
+
+  - id: 标题含 emoji
+    title: "写周报 ✅"
+    expect_status: 201

@@ -1,0 +1,35 @@
+# 登录接口用例数据
+# password 写 "correct" 表示使用注册时的密码，写具体值表示故意传错
+cases:
+  - id: 账号密码正确
+    password: correct
+    expect_status: 200
+    expect_field: token
+
+  - id: 密码错误
+    password: wrong_password
+    expect_status: 400
+    expect_msg: 用户名或密码错误
+
+  - id: 密码为空串
+    password: ""
+    expect_status: 400
+    expect_msg: 缺少必填字段
+
+  - id: 用户名为空串
+    username: ""
+    password: correct
+    expect_status: 400
+    expect_msg: 缺少必填字段
+
+  - id: 未注册的账号
+    username: not_exist_user_99
+    password: "123456"
+    expect_status: 400
+    expect_msg: 用户名或密码错误
+
+  - id: 大小写不同的用户名
+    username: __UPPER__
+    password: correct
+    expect_status: 400
+    expect_msg: 用户名或密码错误
